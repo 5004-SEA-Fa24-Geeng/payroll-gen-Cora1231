@@ -8,6 +8,129 @@ This document is meant to provide a tool for you to demonstrate the design proce
 
 Place your class diagram below. Make sure you check the fil in the browser on github.com to make sure it is rendering correctly. If it is not, you will need to fix it. As a reminder, here is a link to tools that can help you create a class diagram: [Class Resources: Class Design Tools](https://github.com/CS5004-khoury-lionelle/Resources?tab=readme-ov-file#uml-design-tools)
 
+```mermaid
+classDiagram
+%% Utility class for file operations
+class FileUtil {
++EMPLOYEE_HEADER: String
++PAY_STUB_HEADER: String
++readFileToList(file: String): List~String~
++writeFile(outFile: String, lines: List~String~): void
++writeFile(outFile: String, lines: List~String~, backup: boolean): void
+}
+
+    %% IEmployee interface definition using a stereotype
+    class IEmployee {
+      <<interface>>
+      +getName(): String
+      +getID(): String
+      +getPayRate(): double
+      +getEmployeeType(): String
+      +getYTDEarnings(): double
+      +getYTDTaxesPaid(): double
+      +getPretaxDeductions(): double
+      +runPayroll(hoursWorked: double): IPayStub
+      +toCSV(): String
+    }
+
+    %% Concrete Employee classes
+    class SalaryEmployee {
+        -name: String
+        -id: String
+        -payRate: double
+        -ytdEarnings: double
+        -ytdTaxesPaid: double
+        -pretaxDeductions: double
+        +SalaryEmployee(name: String, id: String, payRate: double, ytdEarnings: double, ytdTaxesPaid: double, pretaxDeductions: double)
+        +getName(): String
+        +getID(): String
+        +getPayRate(): double
+        +getEmployeeType(): String
+        +getYTDEarnings(): double
+        +getYTDTaxesPaid(): double
+        +getPretaxDeductions(): double
+        +runPayroll(hoursWorked: double): IPayStub
+        +toCSV(): String
+    }
+
+    class HourlyEmployee {
+        -name: String
+        -id: String
+        -payRate: double
+        -ytdEarnings: double
+        -ytdTaxesPaid: double
+        -pretaxDeductions: double
+        +HourlyEmployee(name: String, id: String, payRate: double, ytdEarnings: double, ytdTaxesPaid: double, pretaxDeductions: double)
+        +getName(): String
+        +getID(): String
+        +getPayRate(): double
+        +getEmployeeType(): String
+        +getYTDEarnings(): double
+        +getYTDTaxesPaid(): double
+        +getPretaxDeductions(): double
+        +runPayroll(hoursWorked: double): IPayStub
+        +toCSV(): String
+    }
+
+    IEmployee <|.. SalaryEmployee
+    IEmployee <|.. HourlyEmployee
+
+    %% IPayStub interface definition using a stereotype
+    class IPayStub {
+      <<interface>>
+      +getPay(): double
+      +getTaxesPaid(): double
+      +toCSV(): String
+    }
+
+    %% Concrete PayStub class for generating payroll details
+    class PayStub {
+      -employeeName: String
+      -netPay: double
+      -taxes: double
+      -ytdEarnings: double
+      -ytdTaxesPaid: double
+      +getPay(): double
+      +getTaxesPaid(): double
+      +toCSV(): String
+    }
+    IPayStub <|.. PayStub
+
+    %% ITimeCard interface definition using a stereotype
+    class ITimeCard {
+      <<interface>>
+      +getEmployeeID(): String
+      +getHoursWorked(): double
+    }
+
+    %% Builder class for converting CSV lines into objects
+    class Builder {
+      +buildEmployeeFromCSV(line: String): IEmployee
+      +buildTimeCardFromCSV(line: String): ITimeCard
+    }
+
+    %% Main driver class for the program
+    class PayrollGenerator {
+      +main(args: String[]): void
+    }
+
+    %% Inner class for processing command-line arguments (renamed for diagram clarity)
+    class PayrollGenerator_Arguments {
+      -employeeFile: String
+      -payrollFile: String
+      -timeCards: String
+      +getEmployeeFile(): String
+      +getPayrollFile(): String
+      +getTimeCards(): String
+      +printHelp(): void
+      +process(args: String[]): PayrollGenerator_Arguments
+    }
+
+    %% Relationships
+    PayrollGenerator ..> FileUtil : uses
+    PayrollGenerator ..> Builder : uses
+    PayrollGenerator ..> PayrollGenerator_Arguments : contains
+```
 
 
 
@@ -28,7 +151,9 @@ You should feel free to number your brainstorm.
 
 1. Test that the `Employee` class properly returns `name` from `getName()`
 2. Test that the `Employee` class properly returns `id` from `getId()`
-3. continue to add your brainstorm here (you don't need to super formal - this is a brainstorm) - yes, you can change the bullets above to something that fits your design.
+3. Test that the `Employee` class properly returns `payRate` from `getPayRate()`
+4. Test that the `Employee` class properly returns the correct `employee type` from `getEmployeeType()`
+5. 
 
 
 

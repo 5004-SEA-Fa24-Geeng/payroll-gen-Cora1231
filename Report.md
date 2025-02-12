@@ -4,13 +4,14 @@ This report helps you demonstrate your understanding of the concepts. You should
 
 ## Technical Questions
 
-1. What does CSV stand for? 
-   
+1. What does CSV stand for?
+   * A CSV is a comma-separated values file, which allows data to be saved in a tabular format. CSVs look like a garden-variety spreadsheet but with a . csv extension. CSV files can be used with most any spreadsheet program, such as Microsoft Excel or Google Spreadsheets.
 
 2. Why would you declare `List<IEmployee>` instead of `ArrayList<HourlyEmployee>`?
+    * Using List<IEmoloyee> is more flexible. 
 
 3. When you have one class referencing another object, such as storing that object as one of the attributes of the first class - what type of relationship is that called (between has-a and is-a)?
-
+    * has-a
 4. Can you provide an example of a has-a relationship in your code (if one exists)?
 
 
