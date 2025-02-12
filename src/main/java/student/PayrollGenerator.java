@@ -1,10 +1,10 @@
 package student;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.LinkedList;
 
 /**
  * Main driver for the PayrollGenerator program.
@@ -85,7 +85,7 @@ public final class PayrollGenerator {
         for (IEmployee employee : employees) {
             if (map.containsKey(employee.getID())) {
                 IPayStub payStub = employee.runPayroll(map.get(employee.getID()));
-                if(payStub != null) {
+                if (payStub != null) {
                     payStubs.add(payStub);
                 }
 

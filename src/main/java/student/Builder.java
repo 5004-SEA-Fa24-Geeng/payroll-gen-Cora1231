@@ -1,5 +1,4 @@
 package student;
-
 /**
  * This is a static class (essentially functions) that will help you build objects from CSV strings.
  * These objects are then used in the rest of the program. Often these builders are associated

@@ -1,21 +1,41 @@
 package student;
 
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+/**
+ * Represents a salary employee.
+ */
 public class SalaryEmployee implements IEmployee {
-    // The employee's name.
+
+    /**
+     * The employee's name.
+     */
     private final String name;
-    // The employee's unique identifier.
+
+    /**
+     * The employee's unique identifier.
+     */
     private final String id;
-    // The employee's pay rate (annual or monthly, as defined by your CSV data).
+
+    /**
+     * The employee's pay rate (annual or monthly, as defined by your CSV data).
+     */
     private final double payRate;
-    // The pretax deductions for the employee.
+
+    /**
+     * The pretax deductions for the employee.
+     */
     private final double pretaxDeductions;
-    // Year-to-date earnings.
+
+    /**
+     * Year-to-date earnings.
+     */
     private double ytdEarnings;
-    // Year-to-date taxes paid.
+
+    /**
+     * Year-to-date taxes paid.
+     */
     private double ytdTaxesPaid;
 
     /**
@@ -28,7 +48,8 @@ public class SalaryEmployee implements IEmployee {
      * @param ytdTaxesPaid     the year-to-date taxes paid
      * @param pretaxDeductions the pretax deductions for the employee
      */
-    public SalaryEmployee(String name, String id, double payRate, double ytdEarnings, double ytdTaxesPaid, double pretaxDeductions) {
+    public SalaryEmployee(String name, String id, double payRate, double ytdEarnings,
+                          double ytdTaxesPaid, double pretaxDeductions) {
         this.name = name;
         this.id = id;
         this.payRate = payRate;
@@ -108,7 +129,12 @@ public class SalaryEmployee implements IEmployee {
         return pretaxDeductions;
     }
 
-
+    /**
+     * Processes payroll for the current period.
+     *
+     * @param hoursWorked the number of hours worked.
+     * @return a PayStub representing the payroll details, or null if hoursWorked is negative.
+     */
     @Override
     public IPayStub runPayroll(double hoursWorked) {
         if (hoursWorked < 0) {
@@ -121,11 +147,21 @@ public class SalaryEmployee implements IEmployee {
         return new PayStub(name, ytdEarnings, ytdTaxesPaid, getNetPay(), getTaxesPaid());
     }
 
+    /**
+     * Calculates the taxes paid for the current pay period.
+     *
+     * @return the taxes paid, rounded to two decimal places.
+     */
     public double getTaxesPaid() {
-        BigDecimal taxes = BigDecimal.valueOf((payRate / 24 - getPretaxDeductions()) * .2265);
+        BigDecimal taxes = BigDecimal.valueOf((payRate / 24 - getPretaxDeductions()) * 0.2265);
         return taxes.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
+    /**
+     * Calculates the net pay for the current pay period.
+     *
+     * @return the net pay, rounded to two decimal places.
+     */
     public double getNetPay() {
         BigDecimal netPay = BigDecimal.valueOf(payRate / 24 - getTaxesPaid() - pretaxDeductions);
         return netPay.setScale(2, RoundingMode.HALF_UP).doubleValue();
@@ -152,9 +188,15 @@ public class SalaryEmployee implements IEmployee {
      */
     @Override
     public String toCSV() {
-        return String.format("%s,%s,%s,%.2f,%.2f,%.2f,%.2f",
-                getEmployeeType(), name, id, payRate, pretaxDeductions, ytdEarnings, ytdTaxesPaid);
+        return String.format(
+                "%s,%s,%s,%.2f,%.2f,%.2f,%.2f",
+                getEmployeeType(),
+                name,
+                id,
+                payRate,
+                pretaxDeductions,
+                ytdEarnings,
+                ytdTaxesPaid
+        );
     }
-
-
 }
