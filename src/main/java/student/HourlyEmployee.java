@@ -153,6 +153,9 @@ public class HourlyEmployee implements IEmployee {
         BigDecimal taxes = BigDecimal.valueOf(
                 (calculateGrossPay(hoursWorked) - getPretaxDeductions()) * 0.2265
         );
+        if(taxes.doubleValue()<=0){
+            return 0;
+        }
         return taxes.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
