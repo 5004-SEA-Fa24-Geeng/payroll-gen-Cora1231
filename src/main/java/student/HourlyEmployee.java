@@ -131,7 +131,7 @@ public class HourlyEmployee implements IEmployee {
     @Override
     public IPayStub runPayroll(double hoursWorked) {
         ytdEarnings += getNetPay(hoursWorked);
-        ytdTaxesPaid += getNetPay(hoursWorked);
+        ytdTaxesPaid += getTaxesPaid(hoursWorked);
         return new PayStub(
                 getName(),
                 getYTDEarnings(),
