@@ -111,11 +111,13 @@ public class SalaryEmployee implements IEmployee {
 
     @Override
     public IPayStub runPayroll(double hoursWorked) {
-        ytdEarnings += getNetPay();
-        ytdTaxesPaid += getTaxesPaid();
-        if (hoursWorked <= 0) {
+        if(hoursWorked<0){
             return null;
         }
+        double currentTaxes = getTaxesPaid();
+        double currentNetPay = getNetPay();
+        ytdEarnings += currentNetPay;
+        ytdTaxesPaid += currentTaxes;
         return new PayStub(name, ytdEarnings, ytdTaxesPaid, getNetPay(), getTaxesPaid());
     }
 
