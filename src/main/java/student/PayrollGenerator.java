@@ -38,7 +38,6 @@ public final class PayrollGenerator {
      */
     private static final String DEFAULT_TIME_CARD_FILE = "resources/time_cards.csv";
 
-
     /**
      * private constructor to prevent instantiation.
      */
@@ -69,7 +68,6 @@ public final class PayrollGenerator {
 
         List<IPayStub> payStubs = new LinkedList<>();
 
-
         // now we suggest looping through the timeCardList and for each timecard, find
         // the matching employee and generate a new paystub object. Then add that paystub
         // to the payStubs list. - remember, you can use the employee ID to match the employee
@@ -88,12 +86,10 @@ public final class PayrollGenerator {
                 if (payStub != null) {
                     payStubs.add(payStub);
                 }
-
             }
         }
 
         // now save out employees to a new file
-
         employeeLines = employees.stream().map(IEmployee::toCSV).collect(Collectors.toList());
         employeeLines.add(0, FileUtil.EMPLOYEE_HEADER);
         FileUtil.writeFile(arguments.getEmployeeFile(), employeeLines);
@@ -103,9 +99,7 @@ public final class PayrollGenerator {
                 .collect(Collectors.toList());
         payStubLines.add(0, FileUtil.PAY_STUB_HEADER);
         FileUtil.writeFile(arguments.getPayrollFile(), payStubLines);
-
     }
-
 
     /**
      * This is an internal class. Please leave it as is/do not modify! This design is common for
@@ -126,7 +120,6 @@ public final class PayrollGenerator {
          * sets the timeCards argument.
          */
         private String timeCards = DEFAULT_TIME_CARD_FILE;
-
 
         /**
          * Constructor for Arguments. Setup as private, so builder has to be used.
@@ -184,21 +177,21 @@ public final class PayrollGenerator {
          * Processes the arguments.
          *
          * @param args the arguments
-         * @return an Argument object with file names added
+         * @return an Arguments object with file names added
          */
         public static Arguments process(String[] args) {
             Arguments arguments = new Arguments();
             for (int i = 0; i < args.length; i++) {
                 if (args[i].equals("-e")) {
-                    if (i + 1 < args.length && ! args[i + 1].startsWith("-")) {
+                    if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         arguments.employeeFile = args[i + 1];
                     } else {
-                        System.out.println("Missing argument for -i option");
+                        System.out.println("Missing argument for -e option");
                         arguments.printHelp();
                         System.exit(1);
                     }
                 } else if (args[i].equals("-t")) {
-                    if (i + 1 < args.length && ! args[i + 1].startsWith("-")) {
+                    if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         arguments.timeCards = args[i + 1];
                     } else {
                         System.out.println("Missing argument for -t option");
@@ -206,7 +199,7 @@ public final class PayrollGenerator {
                         System.exit(1);
                     }
                 } else if (args[i].equals("-o")) {
-                    if (i + 1 < args.length && ! args[i + 1].startsWith("-")) {
+                    if (i + 1 < args.length && !args[i + 1].startsWith("-")) {
                         arguments.payrollFile = args[i + 1];
                     } else {
                         System.out.println("Missing argument for -o option");
@@ -225,5 +218,4 @@ public final class PayrollGenerator {
             return arguments;
         }
     }
-
 }
