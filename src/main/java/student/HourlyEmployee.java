@@ -130,6 +130,9 @@ public class HourlyEmployee implements IEmployee {
      */
     @Override
     public IPayStub runPayroll(double hoursWorked) {
+        if(hoursWorked<0){
+            return null;
+        }
         double currentTaxes = getTaxesPaid(hoursWorked);
         double currentNetPay = getNetPay(hoursWorked);
 
@@ -187,7 +190,7 @@ public class HourlyEmployee implements IEmployee {
      * @return the calculated gross pay.
      */
     public double calculateGrossPay(double hoursWorked) {
-        if(hoursWorked<=0){
+        if(hoursWorked<0){
             return 0;
         }
         if (hoursWorked > 40) {

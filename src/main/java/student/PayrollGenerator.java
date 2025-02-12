@@ -84,7 +84,11 @@ public final class PayrollGenerator {
         }
         for (IEmployee employee : employees) {
             if (map.containsKey(employee.getID())) {
-                payStubs.add(employee.runPayroll(map.get(employee.getID())));
+                IPayStub payStub = employee.runPayroll(map.get(employee.getID()));
+                if(payStub != null) {
+                    payStubs.add(payStub);
+                }
+
             }
         }
 
