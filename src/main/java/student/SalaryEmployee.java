@@ -84,7 +84,7 @@ public class SalaryEmployee implements IEmployee {
      */
     @Override
     public double getYTDEarnings() {
-        return payRate*24;
+        return ytdEarnings;
     }
 
     /**
