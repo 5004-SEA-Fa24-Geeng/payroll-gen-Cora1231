@@ -130,14 +130,20 @@ public class HourlyEmployee implements IEmployee {
      */
     @Override
     public IPayStub runPayroll(double hoursWorked) {
-        ytdEarnings += getNetPay(hoursWorked);
-        ytdTaxesPaid += getTaxesPaid(hoursWorked);
+        double currentTaxes = getTaxesPaid(hoursWorked);
+        double currentNetPay = getNetPay(hoursWorked);
+
+        // Update year-to-date totals.
+        ytdEarnings += currentNetPay;
+        ytdTaxesPaid += currentTaxes;
+
+        // Return a new PayStub with consistent values.
         return new PayStub(
                 getName(),
                 getYTDEarnings(),
                 getYTDTaxesPaid(),
-                getNetPay(hoursWorked),
-                getTaxesPaid(hoursWorked)
+                currentNetPay,
+                currentTaxes
         );
     }
 
@@ -181,6 +187,9 @@ public class HourlyEmployee implements IEmployee {
      * @return the calculated gross pay.
      */
     public double calculateGrossPay(double hoursWorked) {
+        if(hoursWorked<=0){
+            return 0;
+        }
         if (hoursWorked > 40) {
             return (hoursWorked - 40) * payRate * 1.5 + (40 * payRate);
         }
