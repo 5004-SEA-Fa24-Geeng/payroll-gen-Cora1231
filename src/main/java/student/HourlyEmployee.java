@@ -1,6 +1,7 @@
 package student;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * Represents an hourly employee and implements the IEmployee interface.
@@ -9,25 +10,25 @@ import java.math.BigDecimal;
 public class HourlyEmployee implements IEmployee {
 
     /** The employee's name. */
-    private String name;
+    private final String name;
 
     /** The employee's unique identifier. */
-    private String id;
+    private final String id;
 
     /** The employee's pay rate per hour. */
-    private double payRate;
+    private final double payRate;
 
     /** The employee's year-to-date earnings. */
-    private double ytdEarnings;
+    private  double ytdEarnings;
 
     /** The employee's year-to-date taxes paid. */
-    private double ytdTaxesPaid;
+    private  double ytdTaxesPaid;
 
     /** The net pay for the current period (not used directly in calculations). */
     private double netPay;
 
     /** The pretax deductions for the employee. */
-    private double pretaxDeductions;
+    private final double pretaxDeductions;
 
     /**
      * Constructs an HourlyEmployee with the specified parameters.
@@ -129,10 +130,12 @@ public class HourlyEmployee implements IEmployee {
      */
     @Override
     public IPayStub runPayroll(double hoursWorked) {
+        ytdEarnings += getNetPay(hoursWorked);
+        ytdTaxesPaid += getNetPay(hoursWorked);
         return new PayStub(
                 getName(),
-                getYTDEarnings() + getNetPay(hoursWorked),
-                getYTDTaxesPaid() + getTaxesPaid(hoursWorked),
+                getYTDEarnings(),
+                getYTDTaxesPaid(),
                 getNetPay(hoursWorked),
                 getTaxesPaid(hoursWorked)
         );
@@ -150,7 +153,7 @@ public class HourlyEmployee implements IEmployee {
         BigDecimal taxes = BigDecimal.valueOf(
                 (calculateGrossPay(hoursWorked) - getPretaxDeductions()) * 0.2265
         );
-        return taxes.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return taxes.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     /**
@@ -164,7 +167,7 @@ public class HourlyEmployee implements IEmployee {
         BigDecimal netPay = BigDecimal.valueOf(
                 calculateGrossPay(hoursWorked) - getTaxesPaid(hoursWorked) - getPretaxDeductions()
         );
-        return netPay.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return netPay.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     /**
@@ -191,14 +194,6 @@ public class HourlyEmployee implements IEmployee {
     @Override
     public String toCSV() {
         return String.format(
-                "%s,%s,%s,%.2f,%.2f,%.2f,%.2f",
-                getEmployeeType(),
-                name,
-                id,
-                payRate,
-                pretaxDeductions,
-                ytdEarnings,
-                ytdTaxesPaid
-        );
+                getEmployeeType(), name, id, payRate, pretaxDeductions, ytdEarnings, ytdTaxesPaid);
     }
 }

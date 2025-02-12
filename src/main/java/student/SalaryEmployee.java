@@ -2,20 +2,21 @@ package student;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class SalaryEmployee implements IEmployee {
     // The employee's name.
-    private String name;
+    private final String name;
     // The employee's unique identifier.
-    private String id;
+    private final String id;
     // The employee's pay rate (annual or monthly, as defined by your CSV data).
-    private double payRate;
+    private final double payRate;
     // Year-to-date earnings.
-    private double ytdEarnings;
+    private final double ytdEarnings;
     // Year-to-date taxes paid.
-    private double ytdTaxesPaid;
+    private final double ytdTaxesPaid;
     // The pretax deductions for the employee.
-    private double pretaxDeductions;
+    private final double pretaxDeductions;
 
     /**
      * Constructs a SalaryEmployee with the specified parameters.
@@ -118,12 +119,12 @@ public class SalaryEmployee implements IEmployee {
 
     public double getTaxesPaid() {
         BigDecimal taxes = BigDecimal.valueOf((payRate/24-getPretaxDeductions())*.2265);
-        return  taxes.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return  taxes.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
     public double getNetPay(){
         BigDecimal netPay= BigDecimal.valueOf(payRate/24-getTaxesPaid()-pretaxDeductions);
-        return netPay.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return netPay.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
     /**
      * Rounds a given value to two decimal places.

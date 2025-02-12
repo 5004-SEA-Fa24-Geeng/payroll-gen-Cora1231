@@ -1,12 +1,13 @@
 package student;
 
-public class PayStub implements IPayStub{
+public class PayStub implements IPayStub {
     String employeeName;
     double netPay;
     double taxes;
     double ytdEarnings;
     double ytdTaxesPaid;
-    public PayStub(String employeeName, double ytdEarnings, double ytdTaxesPaid,double netPay,double taxes) {
+
+    public PayStub(String employeeName, double ytdEarnings, double ytdTaxesPaid, double netPay, double taxes) {
         this.employeeName = employeeName;
         this.ytdEarnings = ytdEarnings;
         this.ytdTaxesPaid = ytdTaxesPaid;
@@ -26,6 +27,6 @@ public class PayStub implements IPayStub{
 
     @Override
     public String toCSV() {
-        return employeeName+","+netPay+","+taxes+","+ytdEarnings+","+ytdTaxesPaid;
+        return employeeName + "," + netPay + "," + taxes + "," + ytdEarnings + "," + ytdTaxesPaid;
     }
 }
