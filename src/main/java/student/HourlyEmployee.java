@@ -193,7 +193,7 @@ public class HourlyEmployee implements IEmployee {
      */
     @Override
     public String toCSV() {
-        return String.format(
+        return String.format("%s,%s,%s,%.2f,%.2f,%.2f,%.2f",
                 getEmployeeType(), name, id, payRate, pretaxDeductions, ytdEarnings, ytdTaxesPaid);
     }
 }

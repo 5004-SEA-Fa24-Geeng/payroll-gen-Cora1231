@@ -12,21 +12,21 @@ public class SalaryEmployee implements IEmployee {
     // The employee's pay rate (annual or monthly, as defined by your CSV data).
     private final double payRate;
     // Year-to-date earnings.
-    private final double ytdEarnings;
+    private double ytdEarnings;
     // Year-to-date taxes paid.
-    private final double ytdTaxesPaid;
+    private double ytdTaxesPaid;
     // The pretax deductions for the employee.
     private final double pretaxDeductions;
 
     /**
      * Constructs a SalaryEmployee with the specified parameters.
      *
-     * @param name              the employee's name
-     * @param id                the employee's ID
-     * @param payRate           the pay rate for the employee
-     * @param ytdEarnings       the year-to-date earnings
-     * @param ytdTaxesPaid      the year-to-date taxes paid
-     * @param pretaxDeductions  the pretax deductions for the employee
+     * @param name             the employee's name
+     * @param id               the employee's ID
+     * @param payRate          the pay rate for the employee
+     * @param ytdEarnings      the year-to-date earnings
+     * @param ytdTaxesPaid     the year-to-date taxes paid
+     * @param pretaxDeductions the pretax deductions for the employee
      */
     public SalaryEmployee(String name, String id, double payRate, double ytdEarnings, double ytdTaxesPaid, double pretaxDeductions) {
         this.name = name;
@@ -111,21 +111,24 @@ public class SalaryEmployee implements IEmployee {
 
     @Override
     public IPayStub runPayroll(double hoursWorked) {
+        ytdEarnings += getNetPay();
+        ytdTaxesPaid += getTaxesPaid();
         if (hoursWorked <= 0) {
             return null;
         }
-       return new PayStub(name,ytdEarnings+getNetPay(),ytdTaxesPaid+getTaxesPaid(),getNetPay(),getTaxesPaid());
+        return new PayStub(name, ytdEarnings, ytdTaxesPaid, getNetPay(), getTaxesPaid());
     }
 
     public double getTaxesPaid() {
-        BigDecimal taxes = BigDecimal.valueOf((payRate/24-getPretaxDeductions())*.2265);
-        return  taxes.setScale(2, RoundingMode.HALF_UP).doubleValue();
+        BigDecimal taxes = BigDecimal.valueOf((payRate / 24 - getPretaxDeductions()) * .2265);
+        return taxes.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 
-    public double getNetPay(){
-        BigDecimal netPay= BigDecimal.valueOf(payRate/24-getTaxesPaid()-pretaxDeductions);
+    public double getNetPay() {
+        BigDecimal netPay = BigDecimal.valueOf(payRate / 24 - getTaxesPaid() - pretaxDeductions);
         return netPay.setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
+
     /**
      * Rounds a given value to two decimal places.
      *
