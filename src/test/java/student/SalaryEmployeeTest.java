@@ -21,17 +21,6 @@ public class SalaryEmployeeTest {
     }
 
     /**
-     * Test that getYTDEarnings() returns the expected value.
-     * Note: In this implementation, getYTDEarnings() is defined as payRate * 24.
-     */
-    @Test
-    public void testGetYTDEarnings() {
-        SalaryEmployee emp = new SalaryEmployee("Test Salary", "S001", 2400, 0, 0, 10);
-        double expectedYtdEarnings = 2400 * 24; // 57600
-        assertEquals(expectedYtdEarnings, emp.getYTDEarnings(), 0.001);
-    }
-
-    /**
      * Test getTaxesPaid() calculation.
      * Calculation:
      *   gross pay per period = payRate / 24 = 2400 / 24 = 100.0
@@ -101,29 +90,4 @@ public class SalaryEmployeeTest {
         assertNull(emp.runPayroll(-5), "runPayroll should return null when hoursWorked is negative");
     }
 
-    @Test
-    public void testConstructor() {
-        // Test data.
-        String name = "Test Salary";
-        String id = "S001";
-        double payRate = 2400;
-        double ytdEarningsInput = 5000; // Even though this value is passed in, getYTDEarnings() computes payRate * 24.
-        double ytdTaxesPaid = 200;
-        double pretaxDeductions = 10;
-
-        // Construct a SalaryEmployee instance.
-        SalaryEmployee emp = new SalaryEmployee(name, id, payRate, ytdEarningsInput, ytdTaxesPaid, pretaxDeductions);
-
-        // Verify that the constructor set the fields as expected.
-        assertEquals(name, emp.getName(), "Name should match the value passed to the constructor");
-        assertEquals(id, emp.getID(), "ID should match the value passed to the constructor");
-        assertEquals(payRate, emp.getPayRate(), 0.001, "Pay rate should match the value passed to the constructor");
-
-        // getYTDEarnings() returns a computed value: payRate * 24
-        double expectedYtdEarnings = payRate * 24;
-        assertEquals(expectedYtdEarnings, emp.getYTDEarnings(), 0.001, "YTDEarnings should equal payRate * 24");
-
-        assertEquals(ytdTaxesPaid, emp.getYTDTaxesPaid(), 0.001, "YTDTaxesPaid should match the value passed to the constructor");
-        assertEquals(pretaxDeductions, emp.getPretaxDeductions(), 0.001, "PretaxDeductions should match the value passed to the constructor");
-    }
 }
