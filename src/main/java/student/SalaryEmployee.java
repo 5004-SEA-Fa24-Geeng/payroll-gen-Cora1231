@@ -36,15 +36,6 @@ public class SalaryEmployee implements IEmployee {
         this.pretaxDeductions = pretaxDeductions;
     }
 
-    public SalaryEmployee(IEmployee employee) {
-        this.name = employee.getName();
-        this.id = employee.getID();
-        this.payRate = employee.getPayRate();
-        this.ytdEarnings = employee.getYTDEarnings();
-        this.ytdTaxesPaid = employee.getYTDTaxesPaid();
-        this.pretaxDeductions = employee.getPretaxDeductions();
-    }
-
     /**
      * Gets the employee's name.
      *

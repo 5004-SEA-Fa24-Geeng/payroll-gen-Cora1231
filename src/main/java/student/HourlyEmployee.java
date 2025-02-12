@@ -20,15 +20,6 @@ public class HourlyEmployee implements IEmployee {
         this.pretaxDeductions = pretaxDeductions;
     }
 
-    public HourlyEmployee(IEmployee employee) {
-        this.name = employee.getName();
-        this.id = employee.getID();
-        this.payRate = employee.getPayRate();
-        this.ytdEarnings = employee.getYTDEarnings();
-        this.ytdTaxesPaid = employee.getYTDTaxesPaid();
-        this.pretaxDeductions = employee.getPretaxDeductions();
-    }
-
     @Override
     public String getName() {
         return name;
@@ -88,6 +79,7 @@ public class HourlyEmployee implements IEmployee {
 
     @Override
     public String toCSV() {
-        return "";
+        return String.format("%s,%s,%s,%.2f,%.2f,%.2f,%.2f",
+                getEmployeeType(), name, id, payRate, pretaxDeductions, ytdEarnings, ytdTaxesPaid);
     }
 }
