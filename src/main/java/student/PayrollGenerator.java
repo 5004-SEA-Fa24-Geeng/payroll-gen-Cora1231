@@ -79,10 +79,6 @@ public final class PayrollGenerator {
         //YOUR CODE HERE
         Map<String, Double> map = new HashMap<>();
         for (ITimeCard timeCard : timeCardList) {
-            double hoursWorked = timeCard.getHoursWorked();  // Skip time cards with negative hours.
-            if (hoursWorked < 0) {
-                continue;
-            }
             map.put(timeCard.getEmployeeID(), timeCard.getHoursWorked());
             // Find the matching employee for the current time card.
         }
