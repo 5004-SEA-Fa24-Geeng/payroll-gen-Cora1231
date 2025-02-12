@@ -13,7 +13,7 @@ This report helps you demonstrate your understanding of the concepts. You should
 3. When you have one class referencing another object, such as storing that object as one of the attributes of the first class - what type of relationship is that called (between has-a and is-a)?
     * has-a
 4. Can you provide an example of a has-a relationship in your code (if one exists)?
-
+   * In `HourlyEmployee`, it contains `ytdEarnings`, and `ytdTaxesPaid`. 
 
 5. Can you provide an example of an is-a relationship in your code (if one exists)?
 

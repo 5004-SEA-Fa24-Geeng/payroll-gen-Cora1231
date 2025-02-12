@@ -36,6 +36,15 @@ public class SalaryEmployee implements IEmployee {
         this.pretaxDeductions = pretaxDeductions;
     }
 
+    public SalaryEmployee(IEmployee employee) {
+        this.name = employee.getName();
+        this.id = employee.getID();
+        this.payRate = employee.getPayRate();
+        this.ytdEarnings = employee.getYTDEarnings();
+        this.ytdTaxesPaid = employee.getYTDTaxesPaid();
+        this.pretaxDeductions = employee.getPretaxDeductions();
+    }
+
     /**
      * Gets the employee's name.
      *
@@ -110,16 +119,19 @@ public class SalaryEmployee implements IEmployee {
 
     @Override
     public IPayStub runPayroll(double hoursWorked) {
+        if (hoursWorked <= 0) {
+            return null;
+        }
        return new PayStub(name,ytdEarnings+getNetPay(),ytdTaxesPaid+getTaxesPaid(),getNetPay(),getTaxesPaid());
     }
 
     public double getTaxesPaid() {
-        BigDecimal taxes = BigDecimal.valueOf(payRate/24*.22);
-        return taxes.doubleValue();
+        BigDecimal taxes = BigDecimal.valueOf((payRate/24-getPretaxDeductions())*.2265);
+        return  taxes.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
 
     public double getNetPay(){
-        BigDecimal netPay= BigDecimal.valueOf(payRate/24-payRate*.22-pretaxDeductions);
+        BigDecimal netPay= BigDecimal.valueOf(payRate/24-getTaxesPaid()-pretaxDeductions);
         return netPay.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
     /**

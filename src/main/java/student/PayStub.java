@@ -26,6 +26,6 @@ public class PayStub implements IPayStub{
 
     @Override
     public String toCSV() {
-        return "";
+        return employeeName+","+netPay+","+taxes+","+ytdEarnings+","+ytdTaxesPaid;
     }
 }
