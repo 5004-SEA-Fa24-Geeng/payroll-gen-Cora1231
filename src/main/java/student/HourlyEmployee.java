@@ -9,36 +9,50 @@ import java.math.RoundingMode;
  */
 public class HourlyEmployee implements IEmployee {
 
-    /** The employee's name. */
+    /**
+     * The employee's name.
+     */
     private final String name;
 
-    /** The employee's unique identifier. */
+    /**
+     * The employee's unique identifier.
+     */
     private final String id;
 
-    /** The employee's pay rate per hour. */
+    /**
+     * The employee's pay rate per hour.
+     */
     private final double payRate;
 
-    /** The employee's year-to-date earnings. */
-    private  double ytdEarnings;
+    /**
+     * The employee's year-to-date earnings.
+     */
+    private double ytdEarnings;
 
-    /** The employee's year-to-date taxes paid. */
-    private  double ytdTaxesPaid;
+    /**
+     * The employee's year-to-date taxes paid.
+     */
+    private double ytdTaxesPaid;
 
-    /** The net pay for the current period (not used directly in calculations). */
+    /**
+     * The net pay for the current period (not used directly in calculations).
+     */
     private double netPay;
 
-    /** The pretax deductions for the employee. */
+    /**
+     * The pretax deductions for the employee.
+     */
     private final double pretaxDeductions;
 
     /**
      * Constructs an HourlyEmployee with the specified parameters.
      *
-     * @param name              the employee's name
-     * @param id                the employee's ID
-     * @param payRate           the pay rate per hour
-     * @param ytdEarnings       the year-to-date earnings
-     * @param ytdTaxesPaid      the year-to-date taxes paid
-     * @param pretaxDeductions  the pretax deductions for the employee
+     * @param name             the employee's name
+     * @param id               the employee's ID
+     * @param payRate          the pay rate per hour
+     * @param ytdEarnings      the year-to-date earnings
+     * @param ytdTaxesPaid     the year-to-date taxes paid
+     * @param pretaxDeductions the pretax deductions for the employee
      */
     public HourlyEmployee(String name, String id, double payRate,
                           double ytdEarnings, double ytdTaxesPaid,
@@ -130,7 +144,7 @@ public class HourlyEmployee implements IEmployee {
      */
     @Override
     public IPayStub runPayroll(double hoursWorked) {
-        if(hoursWorked<0){
+        if (hoursWorked < 0) {
             return null;
         }
         double currentTaxes = getTaxesPaid(hoursWorked);
@@ -162,7 +176,7 @@ public class HourlyEmployee implements IEmployee {
         BigDecimal taxes = BigDecimal.valueOf(
                 (calculateGrossPay(hoursWorked) - getPretaxDeductions()) * 0.2265
         );
-        if(taxes.doubleValue()<=0){
+        if (taxes.doubleValue() <= 0) {
             return 0;
         }
         return taxes.setScale(2, RoundingMode.HALF_UP).doubleValue();
@@ -190,7 +204,7 @@ public class HourlyEmployee implements IEmployee {
      * @return the calculated gross pay.
      */
     public double calculateGrossPay(double hoursWorked) {
-        if(hoursWorked<0){
+        if (hoursWorked < 0) {
             return 0;
         }
         if (hoursWorked > 40) {

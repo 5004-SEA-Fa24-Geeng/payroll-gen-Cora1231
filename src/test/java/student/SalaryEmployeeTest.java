@@ -1,6 +1,7 @@
 package student;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -23,9 +24,9 @@ public class SalaryEmployeeTest {
     /**
      * Test getTaxesPaid() calculation.
      * Calculation:
-     *   gross pay per period = payRate / 24 = 2400 / 24 = 100.0
-     *   taxable portion = gross pay - pretaxDeductions = 100.0 - 10 = 90.0
-     *   taxes = 90.0 * 0.2265 = 20.385, rounded to 20.39 (using ROUND_HALF_UP)
+     * gross pay per period = payRate / 24 = 2400 / 24 = 100.0
+     * taxable portion = gross pay - pretaxDeductions = 100.0 - 10 = 90.0
+     * taxes = 90.0 * 0.2265 = 20.385, rounded to 20.39 (using ROUND_HALF_UP)
      */
     @Test
     public void testGetTaxesPaid() {
@@ -37,9 +38,9 @@ public class SalaryEmployeeTest {
     /**
      * Test getNetPay() calculation.
      * Calculation:
-     *   gross pay per period = 2400 / 24 = 100.0
-     *   taxes = 20.39 (as computed above)
-     *   net pay = 100.0 - 20.39 - 10 = 69.61
+     * gross pay per period = 2400 / 24 = 100.0
+     * taxes = 20.39 (as computed above)
+     * net pay = 100.0 - 20.39 - 10 = 69.61
      */
     @Test
     public void testGetNetPay() {
@@ -55,7 +56,7 @@ public class SalaryEmployeeTest {
      * - YTD earnings updated to (original ytdEarnings + getNetPay()). In this test, ytdEarnings is 0.
      * - YTD taxes updated to (original ytdTaxesPaid + getTaxesPaid()). In this test, ytdTaxesPaid is 0.
      * - Net pay and taxes are as computed by getNetPay() and getTaxesPaid().
-     *
+     * <p>
      * This test assumes that the PayStub's toCSV() method returns a CSV string in the format:
      * "employeeName,netPay,taxes,ytdEarnings,ytdTaxesPaid"
      */
@@ -87,7 +88,7 @@ public class SalaryEmployeeTest {
     public void testRunPayrollNegativeOrZero() {
         SalaryEmployee emp = new SalaryEmployee("Test Salary", "S001", 2400, 0, 0, 10);
         assertNull(emp.runPayroll(0), "runPayroll should return null when hoursWorked is 0");
-        assertNull(emp.runPayroll(-5), "runPayroll should return null when hoursWorked is negative");
+        assertNull(emp.runPayroll(- 5), "runPayroll should return null when hoursWorked is negative");
     }
 
 }

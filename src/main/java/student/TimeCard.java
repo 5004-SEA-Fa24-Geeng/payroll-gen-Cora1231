@@ -9,6 +9,7 @@ public class TimeCard implements ITimeCard {
         this.employeeID = employeeID;
         this.hoursWorked = hoursWorked;
     }
+
     @Override
     public String getEmployeeID() {
         return employeeID;

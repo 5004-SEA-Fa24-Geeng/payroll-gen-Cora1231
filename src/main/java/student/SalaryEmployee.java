@@ -11,12 +11,12 @@ public class SalaryEmployee implements IEmployee {
     private final String id;
     // The employee's pay rate (annual or monthly, as defined by your CSV data).
     private final double payRate;
+    // The pretax deductions for the employee.
+    private final double pretaxDeductions;
     // Year-to-date earnings.
     private double ytdEarnings;
     // Year-to-date taxes paid.
     private double ytdTaxesPaid;
-    // The pretax deductions for the employee.
-    private final double pretaxDeductions;
 
     /**
      * Constructs a SalaryEmployee with the specified parameters.
@@ -111,7 +111,7 @@ public class SalaryEmployee implements IEmployee {
 
     @Override
     public IPayStub runPayroll(double hoursWorked) {
-        if(hoursWorked<0){
+        if (hoursWorked < 0) {
             return null;
         }
         double currentTaxes = getTaxesPaid();
